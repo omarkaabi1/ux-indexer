@@ -1,6 +1,5 @@
 "use client";
 
-// Hooks fournis par Wagmi
 import {
   useBalance,
   useConnect,
@@ -8,21 +7,20 @@ import {
   useConnectors,
   useDisconnect,
 } from "wagmi";
+import { formatUnits } from "viem";
 
 export default function Header() {
-  // Récupère l'adresse et l'état de connexion du wallet
+  // Informations sur le wallet connecté
   const { address, isConnected } = useConnection();
 
-  // Récupère les wallets disponibles, par exemple MetaMask
+  // Wallets disponibles dans le navigateur
   const connectors = useConnectors();
 
-  // Fonction permettant de connecter un wallet
+  // Fonctions de connexion et de déconnexion
   const { connect } = useConnect();
-
-  // Fonction permettant de déconnecter le wallet
   const { disconnect } = useDisconnect();
 
-  // Récupère le solde ETH de l'adresse connectée
+  // Solde du wallet connecté
   const { data: balance } = useBalance({
     address,
   });
@@ -31,22 +29,20 @@ export default function Header() {
     <header className="flex items-center justify-between border-b p-4">
       <h1 className="text-xl font-bold">UX Indexer</h1>
 
-      {/* Si le wallet est connecté */}
       {isConnected ? (
         <div className="flex items-center gap-4">
           <div>
-            {/* Adresse du wallet */}
             <p>{address}</p>
 
-            {/* Solde du wallet, limité à 4 chiffres après la virgule */}
             <p>
               {balance
-                ? `${Number(balance.formatted).toFixed(4)} ${balance.symbol}`
+                ? `${Number(
+                    formatUnits(balance.value, balance.decimals)
+                  ).toFixed(4)} ${balance.symbol}`
                 : "Chargement..."}
             </p>
           </div>
 
-          {/* Déconnexion du wallet */}
           <button
             onClick={() => disconnect()}
             className="rounded bg-red-600 px-4 py-2 text-white"
@@ -55,10 +51,8 @@ export default function Header() {
           </button>
         </div>
       ) : (
-        // Si aucun wallet n'est connecté
         <button
           onClick={() => {
-            // Connecte le premier wallet disponible
             if (connectors[0]) {
               connect({ connector: connectors[0] });
             }
