@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    // Le code TypeScript se trouve dans le dossier src
+    "rootDir": "src",
+
+    // Le code JavaScript compilé sera placé dans lib
+    "outDir": "lib",
+
+    // Format des modules utilisé par le projet SQD
+    "module": "commonjs",
+
+    // Version de JavaScript générée
+    "target": "es2020",
+
+    "types": ["node"],
+
+    // Facilite l'importation des dépendances
+    "esModuleInterop": true,
+
+    // Ignore les erreurs de typage venant des dépendances
+    "skipLibCheck": true,
+
+    // Active les décorateurs utilisés par TypeORM
+    "experimentalDecorators": true,
+
+    // Ajoute les informations nécessaires à TypeORM
+    "emitDecoratorMetadata": true
+  }
+}

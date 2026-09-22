@@ -1,0 +1,14 @@
+# Représente un transfert de tokens USDT
+type Transfer @entity {
+  # Identifiant unique du transfert
+  id: ID!
+
+  # Adresse qui envoie les tokens
+  from: String! @index
+
+  # Adresse qui reçoit les tokens
+  to: String! @index
+
+  # Quantité de tokens transférée
+  value: BigInt!
+}

@@ -1,0 +1,13 @@
+services:
+  db:
+    # Image PostgreSQL utilisée
+    image: postgres:15
+
+    # Configuration de la base
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_PASSWORD: postgres
+
+    # Relie le port local au port PostgreSQL du conteneur
+    ports:
+      - "${DB_PORT}:5432"
